@@ -83,5 +83,14 @@ text.addEventListener('click', () => {
 const clear = document.querySelector('.clear')
 clear.addEventListener('click', () => {canvas.clear();})
 
+const download = document.querySelector('.download')
+download.addEventListener('click', () => {
+    image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+  const link = document.createElement('a');
+  link.download = "my-image.png";
+  link.href = image;
+  link.click();
+})
+
 
 canvas.renderAll();

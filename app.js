@@ -8,8 +8,9 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const catchAsync = require('./utils/catchAsync')
 const User = require('./models/user');
+const LocalStrategy = require('passport-local');
 const users = require('./controllers/users.js')
-
+require('dotenv').config();
 const MongoDBStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL
@@ -36,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 const secret = process.env.SECRET || 'nosecret'
 
 const store = MongoDBStore.create({
-    url: dbUrl,
+    mongoUrl: dbUrl,
     secret: secret,
     touchAfter: 24 * 60 * 60
 });
@@ -61,7 +62,7 @@ const sessionConfig = {
 
 app.use(session(sessionConfig))
 app.use(flash())
-app.use(helmet({ contentSecurityPolicy: false}))
+
 
 app.use(passport.initialize());
 app.use(passport.session())
@@ -89,8 +90,15 @@ next();
 app.get('/', (req, res)=> {
     res.render('home');
 })
+isLoggedIn = (req, res, next) => {
+    if(!req.isAuthenticated()) {
+        req.flash('error', 'You must be signed in first');
+        return res.redirect('/login');
+    }
+    next();
+}
 
-app.get('/paintbox', (req,res) => {
+app.get('/paintbox', isLoggedIn ,(req,res) => {
     res.render('paintbox')
 })
 

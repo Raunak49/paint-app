@@ -12,7 +12,7 @@ module.exports.register = async (req,res) => {
     req.login(registerUser , err => {
         if(err) return next(err);
         req.flash('success', `welcome ${registerUser.username}`)
-        res.redirect('/home');
+        res.redirect('/');
     })
     } catch(e){
         req.flash('error', e.message)
@@ -21,12 +21,12 @@ module.exports.register = async (req,res) => {
 }
 
 module.exports.renderLogin = (req, res) => {
-    res.render('users/login')
+    res.render('login')
 }
 
 module.exports.login = (req, res) => {
     req.flash('success', `welcome back ${req.body.username}`)
-    const redirectUrl = (req.session.returnTo || '/home');
+    const redirectUrl = (req.session.returnTo || '/');
     delete req.session.returnTo;
     res.redirect(redirectUrl)
 }
@@ -35,7 +35,7 @@ module.exports.logout = (req, res) => {
     req.logout(function(err) {
         if (err) { return next(err); }
     req.flash('Logged out')
-    res.redirect('/home')
+    res.redirect('/')
     });
     
 }
