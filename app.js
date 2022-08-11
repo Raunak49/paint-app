@@ -10,7 +10,7 @@ const catchAsync = require('./utils/catchAsync')
 const User = require('./models/user');
 const users = require('./controllers/users.js')
 
-const MongoDBStore = require("connect-mongo")(session);
+const MongoDBStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL
 mongoose.connect(dbUrl ,{
@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 const secret = process.env.SECRET || 'nosecret'
 
-const store = new MongoDBStore({
+const store = MongoDBStore.create({
     url: dbUrl,
     secret: secret,
     touchAfter: 24 * 60 * 60
@@ -107,7 +107,6 @@ app.get('/logout', users.logout)
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
 })
-
 app.listen(3000 , () =>{ 
     console.log('working')
 })
