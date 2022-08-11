@@ -1,17 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">painters</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand ms-2" href="/">painters</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav fw-bold ms-auto">
-            <a class="nav-item nav-link me-3" href="/paintbox">paintbox</a>
+            <a class="nav-item nav-link active me-3" href="/paintbox">paintbox</a>
             <% if(!currentUser) { %> 
-            <a class="nav-item nav-link me-3" href="/login">login</a>
-            <a class="nav-item nav-link me-3" href="/register">register</a>
+            <a class="nav-link me-3" href="/login">login</a>
+            <a class="nav-link me-3" href="/register">register</a>
             <% } else { %> 
-              <span class="nav-item nav-link me-3"><%= currentUser.username %></span>
-            <a class="nav-item nav-link me-3" href="/logout">logout</a>
+            <span class="nav-link me-3"><%= currentUser.username %></span>
+            <a class="nav-link me-3" href="/logout">logout</a>
             <% } %> 
           </div>
         </div>
