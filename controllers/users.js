@@ -1,5 +1,5 @@
 const User = require('../models/user');
-
+const flash = require('connect-flash');
 module.exports.renderRegister = (req, res) => {
     res.render('register')
 }
@@ -12,7 +12,10 @@ module.exports.register = async (req,res) => {
     req.login(registerUser , err => {
         if(err) return next(err);
         req.flash('success', `welcome ${registerUser.username}`)
-        res.redirect('/');
+        console.log(req.session.returnTo)
+        const redirectUrl = (req.session.returnTo || '/');
+        delete req.session.returnTo;
+        res.redirect(redirectUrl)
     })
     } catch(e){
         req.flash('error', e.message)
@@ -25,7 +28,7 @@ module.exports.renderLogin = (req, res) => {
 }
 
 module.exports.login = (req, res) => {
-    req.flash('success', `welcome back ${req.body.username}`)
+    req.flash('success', "hello")
     const redirectUrl = (req.session.returnTo || '/');
     delete req.session.returnTo;
     res.redirect(redirectUrl)
